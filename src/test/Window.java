@@ -31,7 +31,7 @@ class Tlo extends javax.swing.JFrame{
 public class Window {
 
 	public static void main(String[] args) {
-		
+		///abra kadabra
 		Tlo okienko = new Tlo();
 		okienko.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.jpg"));
 		okienko.setSize(1024,768);
