@@ -1,0 +1,16 @@
+Menu
+-Nowa gra -> Odpala Historyjke 
+-Poziom -> Zale¿nie od wybranego poziomu 
+ (1. domyœlny tryb, 2. skraca czas pojawiania siê obiektów, 3. skraca czas pojawiania siê obiektów i zwiêksza czêstotliwoœæ pojawiania siê obiektów)
+-Wyjœcie -> System.Exit
+
+Historyjka
+Wyœwietla tekst wprowadzaj¹cy (pseudo fabu³a) a po wciœniêciu klawisza -> Odpala Gre
+
+Gra
+-panel zdrowia
+-kursor zmienia siê w celownik
+-pojawiaj¹ce siê obiekty w losowych miejscach
+-obiekty "png" oczekuj¹ na akcje myszki przez okreœlony czas, jeœli: 
+ (1. obiekt zostanie klikniêty pojawia siê "gif" eksplozji, 2.obiekt przez okreœlony czas nie zosta³ klikniêty znika 1 kreska HP.)
+-tura jest ograniczona czasowo, jeœli uda nam siê przetrwaæ wyskakuje komunikat.
