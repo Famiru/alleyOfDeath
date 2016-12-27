@@ -23,21 +23,24 @@ public class Main extends Application {
 		
 		Label intro = new Label("Mroczny œwiat pe³ny z³a, czy dziœ przertwam?");
 		Button przyciskWstep = new Button("Nowa gra");
-		przyciskWstep.setOnAction(e -> okno.setScene(historia));
 		Button przyciskGry = new Button("Nie poddam siê!");
-		przyciskGry.setOnAction(e -> okno.setScene(gra));
 		Button przyciskMenu = new Button("Powrót");
-		przyciskMenu.setOnAction(e -> okno.setScene(menu));
 		Button przyciskPoziomu = new Button("LvL");
-		przyciskPoziomu.setOnAction(e -> System.exit(0));
 		Button przyciskWyjscia = new Button("Exit");
+		Button przyciskWynikKoncowyWygrana = new Button("BOOM!");
+		Button przyciskWynikKoncowyPrzegrana = new Button("BOom..!");
+		przyciskWstep.setOnAction(e -> okno.setScene(historia));
+		przyciskGry.setOnAction(e -> okno.setScene(gra));
+		przyciskMenu.setOnAction(e -> okno.setScene(menu));
+		przyciskPoziomu.setOnAction(e -> System.exit(0));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
+		przyciskWynikKoncowyWygrana.setOnAction(e -> Wynik.wyswietlWynik("Gratulacje","Wygra³eœ","Dopiero sie rozkrêcam!","Wyjœcie"));
+		przyciskWynikKoncowyPrzegrana.setOnAction(e -> Wynik.wyswietlWynik("Niestety","Przegra³eœ","To jeszcze nie koniec","Wyjœcie"));
 		
-		//Menu
+		//Wyglad Menu
 		VBox panelGlowny = new VBox();
 		panelGlowny.getChildren().addAll(intro, przyciskWstep, przyciskGry, przyciskMenu);
 		menu = new Scene(panelGlowny,1024,768);
-
 		
 		//Wygl¹d Historii
 		StackPane panelHistorii = new StackPane();
@@ -45,11 +48,12 @@ public class Main extends Application {
 		panelHistorii.getChildren().add(przyciskMenu);
 		historia = new Scene(panelHistorii,1024,768);
 		
-		
 		//Wyglad Gry
-		StackPane panelGry = new StackPane();
+		VBox panelGry = new VBox();
 		panelGry.getChildren().add(przyciskWyjscia);
 		panelGry.getChildren().add(przyciskMenu);
+		panelGry.getChildren().add(przyciskWynikKoncowyWygrana);
+		panelGry.getChildren().add(przyciskWynikKoncowyPrzegrana);
 		gra = new Scene(panelGry,1024,768);
 		
 		//Domyslne
@@ -58,7 +62,6 @@ public class Main extends Application {
 		okno.setResizable(false);
 		okno.setScene(menu);
 		okno.show();
-		
 		
 	}
 	
