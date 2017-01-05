@@ -14,7 +14,9 @@ import javafx.scene.layout.VBox;
 public class Main extends Application {
 	
 	Stage okno;
-	Scene menu, historia, gra;
+	Scene menu;
+	Scene historia;
+	Scene gra;
 	
 	@Override
 	public void start(Stage oknoGlowne) {
@@ -23,19 +25,25 @@ public class Main extends Application {
 		
 		Label intro = new Label("Mroczny œwiat pe³ny z³a, czy dziœ przertwam?");
 		Button przyciskWstep = new Button("Nowa gra");
-		Button przyciskGry = new Button("Nie poddam siê!");
+		Button przyciskGry = new Button("OGIEÑ!");
 		Button przyciskMenu = new Button("Powrót");
 		Button przyciskPoziomu = new Button("LvL");
 		Button przyciskWyjscia = new Button("Exit");
-		Button przyciskWynikKoncowyWygrana = new Button("BOOM!");
-		Button przyciskWynikKoncowyPrzegrana = new Button("BOom..!");
+		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
+		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
 		przyciskWstep.setOnAction(e -> okno.setScene(historia));
 		przyciskGry.setOnAction(e -> okno.setScene(gra));
 		przyciskMenu.setOnAction(e -> okno.setScene(menu));
 		przyciskPoziomu.setOnAction(e -> System.exit(0));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
-		przyciskWynikKoncowyWygrana.setOnAction(e -> Wynik.wyswietlWynik("Gratulacje","Wygra³eœ","Dopiero sie rozkrêcam!","Wyjœcie"));
-		przyciskWynikKoncowyPrzegrana.setOnAction(e -> Wynik.wyswietlWynik("Niestety","Przegra³eœ","To jeszcze nie koniec","Wyjœcie"));
+		przyciskWynikKoncowyWygrana.setOnAction(e ->{
+			Wynik.wyswietlWynik("Gratulacje","Wygra³eœ","Menu","Wyjœcie");
+			okno.setScene(menu);
+		});
+		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
+			Wynik.wyswietlWynik("Niestety","Przegra³eœ","Menu","Wyjœcie");
+			okno.setScene(menu);
+		});
 		
 		//Wyglad Menu
 		VBox panelGlowny = new VBox();

@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class Wynik {
+public class Wynik{
 	
 	static boolean przelaczDoMenu;
 
