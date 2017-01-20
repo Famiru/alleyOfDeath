@@ -1,1 +1,11 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.okno{
+	-fx-background-color: #383838;
+	-fx-font-size:12.0pt 
+}
+
+  /*  #Gra{
+        -fx-background-image: url("background.jpg");
+    }
+
+  */ 

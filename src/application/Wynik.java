@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 public class Wynik{
 	
 	static boolean przelaczDoMenu;
-
+	
 	public static boolean wyswietlWynik(String tytul, String opisWyniku, String przyciskMenu, String przyciskZamkniecia){
 		
 		Stage okno = new Stage();
@@ -31,7 +31,7 @@ public class Wynik{
 		zamknijOkno.setOnAction(e ->{
 			przelaczDoMenu = false;
 			okno.close();
-			 System.exit(0);
+			System.exit(0);
 		});
 		idzDoMenu.setOnAction(e ->{
 			przelaczDoMenu = true;
