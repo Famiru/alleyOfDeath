@@ -1,11 +1,8 @@
+.root{
 
-.okno{
-	-fx-background-color: #383838;
-	-fx-font-size:12.0pt 
+	-fx-font-size: 12pt;
+	-fx-background-image: url("background.jpg"); 
 }
 
-  /*  #Gra{
-        -fx-background-image: url("background.jpg");
-    }
 
-  */ 
+

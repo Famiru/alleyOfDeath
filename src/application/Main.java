@@ -62,11 +62,24 @@ public class Main extends Application {
 		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
 		panelGlowny.setVgap(10);
 		panelGlowny.setHgap(10);
+		
+		//TEST
+				Obiekt wrog = new Obiekt();
+				wrog.adultProperty().addListener((v,oldValue,newValue)->{
+					System.out.println("Name Change to"+newValue);
+					System.out.println("adult: "+wrog.adultProperty());
+					System.out.println("imie: "+wrog.getAdult());
+				});
+				Button testowy = new Button("Slij");
+				testowy.setOnAction(e->wrog.setAdult("Gummy"));
+		//
+		
 		GridPane.setConstraints(wyswietlIntro, 5,0);
 		GridPane.setConstraints(przyciskWstep, 5,4);
 		GridPane.setConstraints(przyciskGry, 5,5);
 		GridPane.setConstraints(przyciskMenu, 5,6);
-		panelGlowny.getChildren().addAll(wyswietlIntro, przyciskWstep, przyciskGry, przyciskMenu);
+		GridPane.setConstraints(testowy, 8,8);
+		panelGlowny.getChildren().addAll(wyswietlIntro, przyciskWstep, przyciskGry, przyciskMenu, testowy);
 		menu = new Scene(panelGlowny,1024,768);
 		
 		
@@ -99,15 +112,6 @@ public class Main extends Application {
 		GridPane.setConstraints(przyciskWynikKoncowyWygrana, 6,4);
 		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 6,6);
 		
-		//TEST
-		Obiekt wrog = new Obiekt();
-		wrog.adultProperty().addListener((v,oldValue,newValue)->{
-			System.out.println(""+newValue);
-			System.out.println(""+wrog.adultProperty());
-			System.out.println(""+wrog.getAdult());
-		});
-		//
-		
 		Button przyciskWrog = new Button("COMEON");
 		GridPane.setConstraints(przyciskWrog, 9,9);
 		przyciskWrog.setOnAction(e -> {setUserAgentStylesheet(STYLESHEET_CASPIAN);});
@@ -116,15 +120,13 @@ public class Main extends Application {
 		panelGry.getChildren().addAll(wyswietlZycie,wyswietlPunkty,przyciskMenu,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana,przyciskWrog);
 		panelGry.setId("Gra");
 		gra = new Scene(panelGry,1024,768);
-		//panelGry.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
+		
 		
 		//Domyslne
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
-		panelGlowny.getStylesheets().add("application.css");
-		panelGry.getStylesheets().add("application.css");
-		panelHistorii.getStylesheets().add("application.css");
+		panelGry.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
 		okno.setScene(menu);
 		okno.show();	
 	}
