@@ -1,5 +1,7 @@
 package application;
 	
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -15,29 +17,26 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
+import java.time.Duration;
 import java.util.Random;
 
 public class Main extends Application {
-	
+
 	Stage okno;
 	Scene menu;
 
 	@Override
 	public void start(Stage oknoGlowne) {
-		
-		okno = oknoGlowne;
 
-		Random rand = new Random();
-		int xWartoscLosowa = rand.nextInt(724)+150;
-		int yWartoscLosowa = rand.nextInt(554)+102;
+		okno = oknoGlowne;
 
 
 		TextField podajWiek = new TextField();
 		Label wyswietlIntro = new Label("Mroczny świat pełny zła, czy dziś przertwam?");
-		Label wyswietlZycie = new Label("Zycie: "+"liczbaZyc");
-		Label wyswietlPunkty = new Label("Points: "+"liczbaPunktow");
+		Label wyswietlZycie = new Label("Zycie: " + "liczbaZyc");
+		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
 		Button przyciskGry = new Button("Nowa Gra");
 		Button przyciskWrog = new Button("");
 		Button przyciskWyjscia = new Button("Exit");
@@ -45,36 +44,25 @@ public class Main extends Application {
 		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
 		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
 		przyciskWrog.setId("obrazekWrog");
-		przyciskWrog.setOnAction((ActionEvent e) ->{
-			przyciskWrog.setId("obrazekWrogWybuch");
+		przyciskWrog.setOnAction((ActionEvent e) -> {
+			zmienPozycje(przyciskWrog);
 		});
-		przyciskWrog.setLayoutX(xWartoscLosowa);
-		przyciskWrog.setLayoutY(yWartoscLosowa);
 		przyciskGry.setOnAction(e -> okno.setScene(menu));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
-		przyciskWynikKoncowyWygrana.setOnAction(e ->{
-			Wynik.wyswietlWynik("Gratulacje","Wygrałeś","Menu","Wyjście");
+		przyciskWynikKoncowyWygrana.setOnAction(e -> {
+			Wynik.wyswietlWynik("Gratulacje", "Wygrałeś", "Menu", "Wyjście");
 		});
 		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
-			Wynik.wyswietlWynik("Niestety","Przegrałeś","Menu","Wyjście");
+			Wynik.wyswietlWynik("Niestety", "Przegrałeś", "Menu", "Wyjście");
 		});
-		
-		GridPane panelGlowny = new GridPane();
+
+		Pane panelGlowny = new Pane();
 		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
-		panelGlowny.setVgap(10);
-		panelGlowny.setHgap(10);
 
-		GridPane.setConstraints(przyciskGry, 7,10);
-		GridPane.setConstraints(wyswietlZycie, 0,1);
-		GridPane.setConstraints(wyswietlPunkty, 0,2);
-		GridPane.setConstraints(przyciskWyjscia, 25,0);
-		GridPane.setConstraints(przyciskWynikKoncowyWygrana, 6,4);
-		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 8,4);
-		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 8,8);
-		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie,wyswietlPunkty,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana, przyciskWrog);
-		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
-		menu = new Scene(panelGlowny,1024,758);
+		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie, wyswietlPunkty, przyciskWyjscia, przyciskWynikKoncowyWygrana, przyciskWynikKoncowyPrzegrana, przyciskWrog);
+		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
+		menu = new Scene(panelGlowny, 1024, 758);
 
 
 		//Domyslne
@@ -83,8 +71,8 @@ public class Main extends Application {
 		okno.setResizable(false);
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
 		okno.setScene(menu);
-		okno.show();	
-		
+		okno.show();
+
 		//TEST
 		/*
 		Obiekt wrog = new Obiekt();
@@ -102,6 +90,33 @@ public class Main extends Application {
 		*/
 		//
 	}
+
+	public void zmienPozycje(Button przyciskWrog){
+		Random rand = new Random();
+		int xWartoscLosowa = rand.nextInt(724)+150;
+		int yWartoscLosowa = rand.nextInt(554)+102;
+
+		przyciskWrog.setLayoutX(Math.random() * (xWartoscLosowa - przyciskWrog.getWidth()));
+		przyciskWrog.setLayoutY(Math.random() * (yWartoscLosowa - przyciskWrog.getHeight()));
+
+	}
+
+
+
+
+}
+	public void nacisnieciePrzyciskuWrog(Button przyciskWrog) {
+		przyciskWrog.setId("obrazekWrogWybuch");
+		Timeline timeline = new Timeline(new KeyFrame(
+				Duration.ofSeconds(0, 1);
+		ae -> {
+			zmienPozycje(przyciskWrog);
+			przyciskWrog.setId("obrazekWrog");
+		}));
+		timeline.play();
+	}
+
+
 
 	public static void main(String[] args) {
 		launch(args);
