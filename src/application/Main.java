@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
 import javafx.scene.ImageCursor;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -32,46 +33,58 @@ public class Main extends Application {
 	Scene menu;
     private Timeline timeline;
     private Button przyciskWrog;
+
+
+
+
 	@Override
 	public void start(Stage oknoGlowne) {
 
 		okno = oknoGlowne;
+
+		GridPane panelGlowny = new GridPane();
+		panelGlowny.setHgap(5);
+		panelGlowny.setVgap(10);
+		GridPane panelMenu = new GridPane();
+		panelMenu.setHgap(1);
+		panelMenu.setVgap(2);
+		Pane panelGry = new Pane();
+
+		Image wskaznik = new Image("file:celownik.gif");
+		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
+
         timeline = new Timeline();
         timeline.setCycleCount( Timeline.INDEFINITE );
         timeline.setAutoReverse( true );
 
-		TextField podajWiek = new TextField();
-		Label wyswietlIntro = new Label("Mroczny świat pełny zła, czy dziś przertwam?");
-		Label wyswietlZycie = new Label("Zycie: " + "liczbaZyc");
-		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
+        //Functionality And Display poops
 		Button przyciskGry = new Button("Nowa Gra");
+
 		przyciskWrog = new Button("");
-		Button przyciskWyjscia = new Button("Exit");
-		Button przyciskPotwiedzWiek = new Button("Potwierdz");
-		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
-		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
 		przyciskWrog.setId("obrazekWrog");
 		przyciskWrog.setOnAction((ActionEvent e) -> {
+			nacisnieciePrzyciskuWrog(przyciskWrog);
+		});
+		przyciskGry.setOnAction(e -> {
 			zmienNaLosowaPozycje(przyciskWrog);
 		});
-		przyciskGry.setOnAction(e -> okno.setScene(menu));
-		przyciskWyjscia.setOnAction(e -> System.exit(0));
-		przyciskWynikKoncowyWygrana.setOnAction(e -> {
-			Wynik.wyswietlWynik("Gratulacje", "Wygrałeś", "Menu", "Wyjście");
-		});
-		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
-			Wynik.wyswietlWynik("Niestety", "Przegrałeś", "Menu", "Wyjście");
-		});
-		Pane panelGlowny = new Pane();
-		Image wskaznik = new Image("file:celownik.gif");
-		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
 
-		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie, wyswietlPunkty, przyciskWyjscia, przyciskWynikKoncowyWygrana, przyciskWynikKoncowyPrzegrana, przyciskWrog);
-		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
+		Label wyswietlZycie = new Label("Zycie: " + "liczbaZyc");
+		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
+		wyswietlZycie.setId("hp");
+		wyswietlPunkty.setId("points");
+		panelMenu.add(wyswietlZycie,0,0);
+		panelMenu.add(wyswietlPunkty,5,0);
+		panelMenu.getChildren().addAll(wyswietlZycie,wyswietlPunkty);
+		panelGry.getChildren().add(przyciskWrog);
+		panelGlowny.add(panelGry,0,2);
+		panelGlowny.getChildren().addAll(panelMenu, panelGry);
+
+		//
+
+
+
 		menu = new Scene(panelGlowny, 1024, 758);
-
-
-		//Domyslne
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
@@ -81,23 +94,14 @@ public class Main extends Application {
 
 	}
 
-	public void zmienPozycje(Button przyciskWrog) {
-		Random rand = new Random();
-		int xWartoscLosowa = rand.nextInt(724) + 150;
-		int yWartoscLosowa = rand.nextInt(554) + 102;
-
-		przyciskWrog.setLayoutX(Math.random() * (xWartoscLosowa - przyciskWrog.getWidth()));
-		przyciskWrog.setLayoutY(Math.random() * (yWartoscLosowa - przyciskWrog.getHeight()));
-
-	}
 
 	public void nacisnieciePrzyciskuWrog(Button przyciskWrog) {
 		przyciskWrog.setId("obrazekWrogWybuch");
 		Timeline timeline = new Timeline(new KeyFrame(
-				javafx.util.Duration.seconds(1),new EventHandler() {
+				javafx.util.Duration.seconds(0.25),new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				zmienPozycje(przyciskWrog);
+				zmienNaLosowaPozycje(przyciskWrog);
 				przyciskWrog.setId("obrazekWrog");
 			}
 		}));
@@ -107,10 +111,10 @@ public class Main extends Application {
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
-        timeline.setDelay(javafx.util.Duration.seconds(1));
+        timeline.setDelay(javafx.util.Duration.seconds(0.7));
         timeline.stop();
         timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(1),
+        timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(0.01),
                 ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
         timeline.play();
     }
@@ -139,3 +143,14 @@ public class Main extends Application {
 
 	}
 }
+
+//		Button przyciskWyjscia = new Button("Exit");
+//		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
+//		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
+//		przyciskWyjscia.setOnAction(e -> System.exit(0));
+//		przyciskWynikKoncowyWygrana.setOnAction(e -> {
+//			Wynik.wyswietlWynik("Gratulacje", "Wygrałeś", "Menu", "Wyjście");
+//		});
+//		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
+//			Wynik.wyswietlWynik("Niestety", "Przegrałeś", "Menu", "Wyjście");
+//		});
