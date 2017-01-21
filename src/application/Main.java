@@ -43,11 +43,10 @@ public class Main extends Application {
 		okno = oknoGlowne;
 
 		GridPane panelGlowny = new GridPane();
+		panelGlowny.setPadding(new Insets(10,10,10,10));
 		panelGlowny.setHgap(5);
 		panelGlowny.setVgap(10);
-		GridPane panelMenu = new GridPane();
-		panelMenu.setHgap(1);
-		panelMenu.setVgap(2);
+
 		Pane panelGry = new Pane();
 
 		Image wskaznik = new Image("file:celownik.gif");
@@ -73,12 +72,12 @@ public class Main extends Application {
 		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
 		wyswietlZycie.setId("hp");
 		wyswietlPunkty.setId("points");
-		panelMenu.add(wyswietlZycie,0,0);
-		panelMenu.add(wyswietlPunkty,5,0);
-		panelMenu.getChildren().addAll(wyswietlZycie,wyswietlPunkty);
-		panelGry.getChildren().add(przyciskWrog);
-		panelGlowny.add(panelGry,0,2);
-		panelGlowny.getChildren().addAll(panelMenu, panelGry);
+		GridPane.setConstraints(wyswietlZycie,0,0);
+		GridPane.setConstraints(wyswietlPunkty,30,0);
+		GridPane.setConstraints(przyciskGry,15,0);
+		GridPane.setConstraints(panelGry,0,2);
+		panelGry.getChildren().addAll(przyciskGry, przyciskWrog);
+		panelGlowny.getChildren().addAll(wyswietlZycie,wyswietlPunkty,panelGry);
 
 		//
 
@@ -122,7 +121,7 @@ public class Main extends Application {
     {
         Random rand = new Random();
         int xWartoscLosowa = rand.nextInt(724) + 150;
-        int yWartoscLosowa = rand.nextInt(554) + 102;
+        int yWartoscLosowa = rand.nextInt(454) + 102;
 
         Pozycja pozycja = new Pozycja(xWartoscLosowa,yWartoscLosowa);
         return pozycja;
