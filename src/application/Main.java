@@ -31,27 +31,32 @@ public class Main extends Application {
 		Label wyswietlIntro = new Label("Mroczny świat pełny zła, czy dziś przertwam?");
 		Label wyswietlZycie = new Label("Zycie: "+"liczbaZyc");
 		Label wyswietlPunkty = new Label("Points: "+"liczbaPunktow");
-		Button przyciskGry = new Button("Nowa gra");
+		Button przyciskGry = new Button("Nowa Gra");
+		Button przyciskWrog = new Button("");
 		Button przyciskWyjscia = new Button("Exit");
 		Button przyciskPotwiedzWiek = new Button("Potwierdz");
 		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
 		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
+		przyciskWrog.setId("obrazekWrog");
+		przyciskWrog.setOnAction((ActionEvent e) ->{
+			przyciskWrog.setId("obrazekWrogWybuch");
+		});
 		przyciskGry.setOnAction(e -> okno.setScene(menu));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
-		przyciskPotwiedzWiek.setOnAction(e->ograniczenieWiekowe(podajWiek, podajWiek.getText()));
 		przyciskWynikKoncowyWygrana.setOnAction(e ->{
 			Wynik.wyswietlWynik("Gratulacje","Wygrałeś","Menu","Wyjście");
-			okno.setScene(menu);
 		});
 		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
 			Wynik.wyswietlWynik("Niestety","Przegrałeś","Menu","Wyjście");
-			okno.setScene(menu);
 		});
 		
 		GridPane panelGlowny = new GridPane();
+		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
 		panelGlowny.setVgap(10);
 		panelGlowny.setHgap(10);
+
+
 
 		GridPane.setConstraints(przyciskGry, 7,10);
 		GridPane.setConstraints(wyswietlZycie, 0,1);
@@ -59,15 +64,15 @@ public class Main extends Application {
 		GridPane.setConstraints(przyciskWyjscia, 25,0);
 		GridPane.setConstraints(przyciskWynikKoncowyWygrana, 6,4);
 		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 8,4);
-		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie,wyswietlPunkty,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana);
+		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 8,8);
+		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie,wyswietlPunkty,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana, przyciskWrog);
+		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
 		menu = new Scene(panelGlowny,1024,768);
 
 
 		//Domyslne
-		Image wskaznik = new Image("file:celownik.png");
-		menu.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
-
 		okno.getIcons().add(new Image("file:icon.jpg"));
+
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
@@ -91,25 +96,6 @@ public class Main extends Application {
 		*/
 		//
 	}
-	
-	
-	private boolean ograniczenieWiekowe(TextField podajWiek, String wiadomoscPodajLiczbe) {
-		try{
-			int wiek = Integer.parseInt(podajWiek.getText());
-			if (wiek<18)
-			{	System.out.println("Jesteś zbyt młody.");
-				System.exit(0);
-			}else{
-				System.out.println("Miłej zabawy!");
-			}
-			System.out.println("Twoj wiek to: "+wiek);
-			return true;
-		}catch(NumberFormatException e){
-			System.out.println("Błąd "+ wiadomoscPodajLiczbe +" nie jest liczbą");
-			return false;
-		}
-	}
-	
 
 	public static void main(String[] args) {
 		launch(args);
