@@ -72,12 +72,18 @@ public class Main extends Application {
 		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
 		wyswietlZycie.setId("hp");
 		wyswietlPunkty.setId("points");
+
+		GridPane panelMenu = new GridPane();
+		panelMenu.setPadding(new Insets(10,10,10,10));
+		panelMenu.setHgap(10);
+		panelMenu.setVgap(10);
 		GridPane.setConstraints(wyswietlZycie,0,0);
-		GridPane.setConstraints(wyswietlPunkty,30,0);
-		GridPane.setConstraints(przyciskGry,15,0);
+		GridPane.setConstraints(wyswietlPunkty,50,0);
+		GridPane.setConstraints(przyciskGry,30,0);
 		GridPane.setConstraints(panelGry,0,2);
-		panelGry.getChildren().addAll(przyciskGry, przyciskWrog);
-		panelGlowny.getChildren().addAll(wyswietlZycie,wyswietlPunkty,panelGry);
+		panelMenu.getChildren().addAll(wyswietlZycie, przyciskGry, wyswietlPunkty);
+		panelGry.getChildren().addAll(przyciskWrog);
+		panelGlowny.getChildren().addAll(panelMenu,panelGry);
 
 		//
 
