@@ -1,7 +1,6 @@
 package application;
 	
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -10,6 +9,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
 import javafx.scene.ImageCursor;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,7 +30,7 @@ public class Main extends Application {
 
 	Stage okno;
 	Scene menu;
-
+	Button przyciskWrog;
 	@Override
 	public void start(Stage oknoGlowne) {
 
@@ -40,7 +42,7 @@ public class Main extends Application {
 		Label wyswietlZycie = new Label("Zycie: " + "liczbaZyc");
 		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
 		Button przyciskGry = new Button("Nowa Gra");
-		Button przyciskWrog = new Button("");
+		przyciskWrog = new Button("");
 		Button przyciskWyjscia = new Button("Exit");
 		Button przyciskPotwiedzWiek = new Button("Potwierdz");
 		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
@@ -57,7 +59,6 @@ public class Main extends Application {
 		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
 			Wynik.wyswietlWynik("Niestety", "Przegrałeś", "Menu", "Wyjście");
 		});
-
 		Pane panelGlowny = new Pane();
 		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
@@ -74,7 +75,18 @@ public class Main extends Application {
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
 		okno.setScene(menu);
 		okno.show();
-
+		Path path = new Path();
+		path.getElements().add(new MoveTo(20,20));
+		path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
+		path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
+		PathTransition pathTransition = new PathTransition();
+		pathTransition.setDuration(javafx.util.Duration.seconds(10));
+		pathTransition.setPath(path);
+		pathTransition.setNode(przyciskWrog);
+		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+		pathTransition.setCycleCount(Timeline.INDEFINITE);
+		pathTransition.setAutoReverse(true);
+		pathTransition.play();
 	}
 
 	public void zmienPozycje(Button przyciskWrog) {
@@ -103,5 +115,6 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+
 	}
 }
