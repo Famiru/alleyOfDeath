@@ -30,10 +30,12 @@ import java.util.Random;
 public class Main extends Application {
 
 	Stage okno;
-	Scene menu;
+	Scene scena;
     private Timeline timeline;
     private Button przyciskWrog;
-
+    private int HP=10;
+    Label wyswietlZycie;
+    Label wyswietlPunkty;
 
 
 
@@ -65,11 +67,11 @@ public class Main extends Application {
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 		przyciskGry.setOnAction(e -> {
-			zmienNaLosowaPozycje(przyciskWrog);
+			zmienNaLosowaPozycje(przyciskWrog,false);
 		});
 
-		Label wyswietlZycie = new Label("Zycie: " + "liczbaZyc");
-		Label wyswietlPunkty = new Label("Points: " + "liczbaPunktow");
+		wyswietlZycie = new Label("Zycie: " + HP);
+		wyswietlPunkty = new Label("Punkty: " + "liczbaPunktow");
 		wyswietlZycie.setId("hp");
 		wyswietlPunkty.setId("points");
 
@@ -89,12 +91,12 @@ public class Main extends Application {
 
 
 
-		menu = new Scene(panelGlowny, 1024, 758);
+		scena = new Scene(panelGlowny, 1024, 758);
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
-		okno.setScene(menu);
+		okno.setScene(scena);
 		okno.show();
 
 	}
@@ -106,21 +108,24 @@ public class Main extends Application {
 				javafx.util.Duration.seconds(0.25),new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				zmienNaLosowaPozycje(przyciskWrog);
 				przyciskWrog.setId("obrazekWrog");
 			}
 		}));
 		timeline.play();
 	}
-	private void zmienNaLosowaPozycje(Button przyciskWrog) {
+	private void zmienNaLosowaPozycje(Button przyciskWrog, Boolean odejmijZycie) {
+		if(odejmijZycie) {
+			HP = HP - 1;
+			wyswietlZycie.setText("Zycie: " + HP);
+		}
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
-        timeline.setDelay(javafx.util.Duration.seconds(0.7));
+        timeline.setDelay(javafx.util.Duration.seconds(0.8));
         timeline.stop();
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(0.01),
-                ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
+                ( e ) -> zmienNaLosowaPozycje(przyciskWrog,true), kx, ky) );
         timeline.play();
     }
 	private Pozycja pobierzLosowaPozycje()

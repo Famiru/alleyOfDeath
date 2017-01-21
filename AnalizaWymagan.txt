@@ -1,16 +1,16 @@
-Menu
+scena
 -Nowa gra -> Odpala Historyjke 
--Poziom -> Zale¿nie od wybranego poziomu 
- (1. domyœlny tryb, 2. skraca czas pojawiania siê obiektów, 3. skraca czas pojawiania siê obiektów i zwiêksza czêstotliwoœæ pojawiania siê obiektów)
--Wyjœcie -> System.Exit
+-Poziom -> Zaleï¿½nie od wybranego poziomu 
+ (1. domyï¿½lny tryb, 2. skraca czas pojawiania siï¿½ obiektï¿½w, 3. skraca czas pojawiania siï¿½ obiektï¿½w i zwiï¿½ksza czï¿½stotliwoï¿½ï¿½ pojawiania siï¿½ obiektï¿½w)
+-Wyjï¿½cie -> System.Exit
 
 Historyjka
-Wyœwietla tekst wprowadzaj¹cy (pseudo fabu³a) a po wciœniêciu klawisza -> Odpala Gre
+Wyï¿½wietla tekst wprowadzajï¿½cy (pseudo fabuï¿½a) a po wciï¿½niï¿½ciu klawisza -> Odpala Gre
 
 Gra
 -panel zdrowia
--kursor zmienia siê w celownik
--pojawiaj¹ce siê obiekty w losowych miejscach
--obiekty "png" oczekuj¹ na akcje myszki przez okreœlony czas, jeœli: 
- (1. obiekt zostanie klikniêty pojawia siê "gif" eksplozji, 2.obiekt przez okreœlony czas nie zosta³ klikniêty znika 1 kreska HP.)
--tura jest ograniczona czasowo, jeœli uda nam siê przetrwaæ wyskakuje komunikat.
+-kursor zmienia siï¿½ w celownik
+-pojawiajï¿½ce siï¿½ obiekty w losowych miejscach
+-obiekty "png" oczekujï¿½ na akcje myszki przez okreï¿½lony czas, jeï¿½li: 
+ (1. obiekt zostanie klikniï¿½ty pojawia siï¿½ "gif" eksplozji, 2.obiekt przez okreï¿½lony czas nie zostaï¿½ klikniï¿½ty znika 1 kreska HP.)
+-tura jest ograniczona czasowo, jeï¿½li uda nam siï¿½ przetrwaï¿½ wyskakuje komunikat.
