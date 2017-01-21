@@ -4,6 +4,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
@@ -45,7 +47,7 @@ public class Main extends Application {
 		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
 		przyciskWrog.setId("obrazekWrog");
 		przyciskWrog.setOnAction((ActionEvent e) -> {
-			zmienPozycje(przyciskWrog);
+			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 		przyciskGry.setOnAction(e -> okno.setScene(menu));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
@@ -73,49 +75,30 @@ public class Main extends Application {
 		okno.setScene(menu);
 		okno.show();
 
-		//TEST
-		/*
-		Obiekt wrog = new Obiekt();
-		wrog.adultProperty().addListener((v,oldValue,newValue)->{
-			System.out.println("Name Change to"+newValue);
-			System.out.println("adult: "+wrog.adultProperty());
-			System.out.println("imie: "+wrog.getAdult());
-		});
-		Button testowy = new Button("Slij");
-		testowy.setOnAction(e->wrog.setAdult("Gummy"));
-		
-		Button przyciskWrog = new Button("COMEON");
-		GridPane.setConstraints(przyciskWrog, 9,9);
-		przyciskWrog.setOnAction(e -> {setUserAgentStylesheet(STYLESHEET_CASPIAN);});
-		*/
-		//
 	}
 
-	public void zmienPozycje(Button przyciskWrog){
+	public void zmienPozycje(Button przyciskWrog) {
 		Random rand = new Random();
-		int xWartoscLosowa = rand.nextInt(724)+150;
-		int yWartoscLosowa = rand.nextInt(554)+102;
+		int xWartoscLosowa = rand.nextInt(724) + 150;
+		int yWartoscLosowa = rand.nextInt(554) + 102;
 
 		przyciskWrog.setLayoutX(Math.random() * (xWartoscLosowa - przyciskWrog.getWidth()));
 		przyciskWrog.setLayoutY(Math.random() * (yWartoscLosowa - przyciskWrog.getHeight()));
 
 	}
 
-
-
-
-}
 	public void nacisnieciePrzyciskuWrog(Button przyciskWrog) {
 		przyciskWrog.setId("obrazekWrogWybuch");
 		Timeline timeline = new Timeline(new KeyFrame(
-				Duration.ofSeconds(0, 1);
-		ae -> {
-			zmienPozycje(przyciskWrog);
-			przyciskWrog.setId("obrazekWrog");
+				javafx.util.Duration.seconds(1),new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				zmienPozycje(przyciskWrog);
+				przyciskWrog.setId("obrazekWrog");
+			}
 		}));
 		timeline.play();
 	}
-
 
 
 	public static void main(String[] args) {
