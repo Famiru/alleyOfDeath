@@ -6,25 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
-import javafx.scene.image.*;
 import javafx.scene.ImageCursor;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-
-import java.time.Duration;
 import java.util.Random;
 
 public class Main extends Application {
@@ -51,6 +41,11 @@ public class Main extends Application {
 
 		Pane panelGry = new Pane();
 
+		panelGry.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				odejmijZycie();
+			}
+		});
 		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
 
@@ -67,7 +62,7 @@ public class Main extends Application {
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 		przyciskGry.setOnAction(e -> {
-			zmienNaLosowaPozycje(przyciskWrog,false);
+			zmienNaLosowaPozycje(przyciskWrog);
 		});
 
 		wyswietlZycie = new Label("Zycie: " + HP);
@@ -111,11 +106,7 @@ public class Main extends Application {
 		}));
 		timeline.play();
 	}
-	private void zmienNaLosowaPozycje(Button przyciskWrog, Boolean odejmijZycie) {
-		if(odejmijZycie) {
-			HP = HP - 1;
-			wyswietlZycie.setText("Zycie: " + HP);
-		}
+	private void zmienNaLosowaPozycje(Button przyciskWrog) {
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
@@ -123,7 +114,7 @@ public class Main extends Application {
         timeline.stop();
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(0.01),
-                ( e ) -> zmienNaLosowaPozycje(przyciskWrog,true), kx, ky) );
+                ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
         timeline.play();
     }
 	private Pozycja pobierzLosowaPozycje()
@@ -145,7 +136,10 @@ public class Main extends Application {
         }
 
     }
-
+	private void odejmijZycie() {
+		HP = HP - 1;
+		wyswietlZycie.setText("Zycie: " + HP);
+	}
 	public static void main(String[] args) {
 		launch(args);
 
