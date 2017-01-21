@@ -89,8 +89,6 @@ public class Main extends Application {
 
 		//
 
-
-
 		scena = new Scene(panelGlowny, 1024, 758);
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
