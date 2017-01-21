@@ -64,8 +64,8 @@ public class Main extends Application {
 
 
 		//Domyslne
-		//Image wskaznik = new Image("celownik.png");
-		//menu.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
+		Image wskaznik = new Image("file:celownik.png");
+		menu.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
 
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
