@@ -30,12 +30,15 @@ public class Main extends Application {
 
 	Stage okno;
 	Scene menu;
-	Button przyciskWrog;
+    private Timeline timeline;
+    private Button przyciskWrog;
 	@Override
 	public void start(Stage oknoGlowne) {
 
 		okno = oknoGlowne;
-
+        timeline = new Timeline();
+        timeline.setCycleCount( Timeline.INDEFINITE );
+        timeline.setAutoReverse( true );
 
 		TextField podajWiek = new TextField();
 		Label wyswietlIntro = new Label("Mroczny świat pełny zła, czy dziś przertwam?");
@@ -49,7 +52,7 @@ public class Main extends Application {
 		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
 		przyciskWrog.setId("obrazekWrog");
 		przyciskWrog.setOnAction((ActionEvent e) -> {
-			nacisnieciePrzyciskuWrog(przyciskWrog);
+			zmienNaLosowaPozycje(przyciskWrog);
 		});
 		przyciskGry.setOnAction(e -> okno.setScene(menu));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
@@ -75,18 +78,7 @@ public class Main extends Application {
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
 		okno.setScene(menu);
 		okno.show();
-		Path path = new Path();
-		path.getElements().add(new MoveTo(20,20));
-		path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-		path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
-		PathTransition pathTransition = new PathTransition();
-		pathTransition.setDuration(javafx.util.Duration.seconds(10));
-		pathTransition.setPath(path);
-		pathTransition.setNode(przyciskWrog);
-		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-		pathTransition.setCycleCount(Timeline.INDEFINITE);
-		pathTransition.setAutoReverse(true);
-		pathTransition.play();
+
 	}
 
 	public void zmienPozycje(Button przyciskWrog) {
@@ -111,7 +103,36 @@ public class Main extends Application {
 		}));
 		timeline.play();
 	}
+	private void zmienNaLosowaPozycje(Button przyciskWrog) {
+	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
+        KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
+        KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
+        timeline.setDelay(javafx.util.Duration.seconds(1));
+        timeline.stop();
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(1),
+                ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
+        timeline.play();
+    }
+	private Pozycja pobierzLosowaPozycje()
+    {
+        Random rand = new Random();
+        int xWartoscLosowa = rand.nextInt(724) + 150;
+        int yWartoscLosowa = rand.nextInt(554) + 102;
 
+        Pozycja pozycja = new Pozycja(xWartoscLosowa,yWartoscLosowa);
+        return pozycja;
+    }
+    private class Pozycja
+    {
+        int x;
+        int y;
+        public Pozycja(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+    }
 
 	public static void main(String[] args) {
 		launch(args);
