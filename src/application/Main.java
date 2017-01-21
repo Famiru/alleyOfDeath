@@ -7,7 +7,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -23,9 +22,10 @@ public class Main extends Application {
 	Scene scena;
     private Timeline timeline;
     private Button przyciskWrog;
-    private int HP=10;
-    Label wyswietlZycie;
+    private int punkty=0;
+	private int czas=0;
     Label wyswietlPunkty;
+	Label wyswietlCzas;
 
 
 
@@ -41,11 +41,6 @@ public class Main extends Application {
 
 		Pane panelGry = new Pane();
 
-		panelGry.setOnMousePressed(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent me) {
-				odejmijZycie();
-			}
-		});
 		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
 
@@ -59,30 +54,29 @@ public class Main extends Application {
 		przyciskWrog = new Button("");
 		przyciskWrog.setId("obrazekWrog");
 		przyciskWrog.setOnAction((ActionEvent e) -> {
+			zaktualizujPunkt();
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 		przyciskGry.setOnAction(e -> {
 			zmienNaLosowaPozycje(przyciskWrog);
 		});
 
-		wyswietlZycie = new Label("Zycie: " + HP);
-		wyswietlPunkty = new Label("Punkty: " + "liczbaPunktow");
-		wyswietlZycie.setId("hp");
+		wyswietlPunkty = new Label("Punkty: " + punkty);
 		wyswietlPunkty.setId("points");
+		wyswietlCzas = new Label("Czas: " + czas);
+		wyswietlCzas.setId("time");
 
 		GridPane panelMenu = new GridPane();
 		panelMenu.setPadding(new Insets(10,10,10,10));
 		panelMenu.setHgap(10);
 		panelMenu.setVgap(10);
-		GridPane.setConstraints(wyswietlZycie,0,0);
-		GridPane.setConstraints(wyswietlPunkty,50,0);
+		GridPane.setConstraints(wyswietlPunkty,0,0);
 		GridPane.setConstraints(przyciskGry,30,0);
+		GridPane.setConstraints(wyswietlCzas,60,0);
 		GridPane.setConstraints(panelGry,0,2);
-		panelMenu.getChildren().addAll(wyswietlZycie, przyciskGry, wyswietlPunkty);
+		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, wyswietlCzas);
 		panelGry.getChildren().addAll(przyciskWrog);
 		panelGlowny.getChildren().addAll(panelMenu,panelGry);
-
-		//
 
 		scena = new Scene(panelGlowny, 1024, 758);
 		okno.getIcons().add(new Image("file:icon.jpg"));
@@ -91,9 +85,7 @@ public class Main extends Application {
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
 		okno.setScene(scena);
 		okno.show();
-
 	}
-
 
 	public void nacisnieciePrzyciskuWrog(Button przyciskWrog) {
 		przyciskWrog.setId("obrazekWrogWybuch");
@@ -106,17 +98,19 @@ public class Main extends Application {
 		}));
 		timeline.play();
 	}
+
 	private void zmienNaLosowaPozycje(Button przyciskWrog) {
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
-        timeline.setDelay(javafx.util.Duration.seconds(0.8));
+        timeline.setDelay(javafx.util.Duration.seconds(0.7));
         timeline.stop();
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(0.01),
                 ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
         timeline.play();
     }
+
 	private Pozycja pobierzLosowaPozycje()
     {
         Random rand = new Random();
@@ -126,6 +120,7 @@ public class Main extends Application {
         Pozycja pozycja = new Pozycja(xWartoscLosowa,yWartoscLosowa);
         return pozycja;
     }
+
     private class Pozycja
     {
         int x;
@@ -136,9 +131,9 @@ public class Main extends Application {
         }
 
     }
-	private void odejmijZycie() {
-		HP = HP - 1;
-		wyswietlZycie.setText("Zycie: " + HP);
+	private void zaktualizujPunkt() {
+		punkty = punkty+1;
+		wyswietlPunkty.setText("Punkty: " + punkty);
 	}
 	public static void main(String[] args) {
 		launch(args);

@@ -4,16 +4,17 @@
  -fx-font-size: 12pt;
  -fx-background-image: url("background.jpg"); 
 }
-#hp
+#points
  {
      -fx-font-size: 16pt;
      -fx-text-fill: #FFFFFF;
  }
- #points
+ #time
  {
      -fx-font-size: 16pt;
      -fx-text-fill: #FFFFFF;
  }
+
 #obrazekWrog{
   -fx-background-color: none;
   -fx-background-image: url("devilWalk.gif");
