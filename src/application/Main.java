@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.Random;
+
 public class Main extends Application {
 	
 	Stage okno;
@@ -26,6 +28,11 @@ public class Main extends Application {
 	public void start(Stage oknoGlowne) {
 		
 		okno = oknoGlowne;
+
+		Random rand = new Random();
+		int xWartoscLosowa = rand.nextInt(724)+150;
+		int yWartoscLosowa = rand.nextInt(554)+102;
+
 
 		TextField podajWiek = new TextField();
 		Label wyswietlIntro = new Label("Mroczny świat pełny zła, czy dziś przertwam?");
@@ -41,6 +48,8 @@ public class Main extends Application {
 		przyciskWrog.setOnAction((ActionEvent e) ->{
 			przyciskWrog.setId("obrazekWrogWybuch");
 		});
+		przyciskWrog.setLayoutX(xWartoscLosowa);
+		przyciskWrog.setLayoutY(yWartoscLosowa);
 		przyciskGry.setOnAction(e -> okno.setScene(menu));
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
 		przyciskWynikKoncowyWygrana.setOnAction(e ->{
@@ -56,8 +65,6 @@ public class Main extends Application {
 		panelGlowny.setVgap(10);
 		panelGlowny.setHgap(10);
 
-
-
 		GridPane.setConstraints(przyciskGry, 7,10);
 		GridPane.setConstraints(wyswietlZycie, 0,1);
 		GridPane.setConstraints(wyswietlPunkty, 0,2);
@@ -67,12 +74,11 @@ public class Main extends Application {
 		GridPane.setConstraints(przyciskWynikKoncowyPrzegrana, 8,8);
 		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie,wyswietlPunkty,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana, przyciskWrog);
 		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
-		menu = new Scene(panelGlowny,1024,768);
+		menu = new Scene(panelGlowny,1024,758);
 
 
 		//Domyslne
 		okno.getIcons().add(new Image("file:icon.jpg"));
-
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
 		panelGlowny.getStylesheets().addAll(this.getClass().getResource("application.css").toExternalForm());
