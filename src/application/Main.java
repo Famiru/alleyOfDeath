@@ -3,6 +3,9 @@ package application;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.image.*;
+import javafx.scene.ImageCursor;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,14 +21,14 @@ public class Main extends Application {
 	
 	Stage okno;
 	Scene menu;
-	
+
 	@Override
 	public void start(Stage oknoGlowne) {
 		
 		okno = oknoGlowne;
-		
+
 		TextField podajWiek = new TextField();
-		Label wyswietlIntro = new Label("Mroczny úwiat pe≥ny z≥a, czy dziú przertwam?");
+		Label wyswietlIntro = new Label("Mroczny ≈õwiat pe≈Çny z≈Ça, czy dzi≈õ przertwam?");
 		Label wyswietlZycie = new Label("Zycie: "+"liczbaZyc");
 		Label wyswietlPunkty = new Label("Points: "+"liczbaPunktow");
 		Button przyciskGry = new Button("Nowa gra");
@@ -37,11 +40,11 @@ public class Main extends Application {
 		przyciskWyjscia.setOnAction(e -> System.exit(0));
 		przyciskPotwiedzWiek.setOnAction(e->ograniczenieWiekowe(podajWiek, podajWiek.getText()));
 		przyciskWynikKoncowyWygrana.setOnAction(e ->{
-			Wynik.wyswietlWynik("Gratulacje","Wygra≥eú","Menu","Wyjúcie");
+			Wynik.wyswietlWynik("Gratulacje","Wygra≈Çe≈õ","Menu","Wyj≈õcie");
 			okno.setScene(menu);
 		});
 		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
-			Wynik.wyswietlWynik("Niestety","Przegra≥eú","Menu","Wyjúcie");
+			Wynik.wyswietlWynik("Niestety","Przegra≈Çe≈õ","Menu","Wyj≈õcie");
 			okno.setScene(menu);
 		});
 		
@@ -49,7 +52,7 @@ public class Main extends Application {
 		panelGlowny.setPadding(new Insets(10, 10, 10, 10));
 		panelGlowny.setVgap(10);
 		panelGlowny.setHgap(10);
-			
+
 		GridPane.setConstraints(przyciskGry, 7,10);
 		GridPane.setConstraints(wyswietlZycie, 0,1);
 		GridPane.setConstraints(wyswietlPunkty, 0,2);
@@ -59,7 +62,11 @@ public class Main extends Application {
 		panelGlowny.getChildren().addAll(przyciskGry, wyswietlZycie,wyswietlPunkty,przyciskWyjscia,przyciskWynikKoncowyWygrana,przyciskWynikKoncowyPrzegrana);
 		menu = new Scene(panelGlowny,1024,768);
 
+
 		//Domyslne
+		//Image wskaznik = new Image("celownik.png");
+		//menu.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth()/2,wskaznik.getHeight()/2));
+
 		okno.getIcons().add(new Image("file:icon.jpg"));
 		okno.setTitle("Alley of Death");
 		okno.setResizable(false);
@@ -90,15 +97,15 @@ public class Main extends Application {
 		try{
 			int wiek = Integer.parseInt(podajWiek.getText());
 			if (wiek<18)
-			{	System.out.println("Jestes zbyt m≥ody.");
+			{	System.out.println("Jeste≈õ zbyt m≈Çody.");
 				System.exit(0);
 			}else{
-				System.out.println("Mi≥ej zabawy!");
+				System.out.println("Mi≈Çej zabawy!");
 			}
 			System.out.println("Twoj wiek to: "+wiek);
 			return true;
 		}catch(NumberFormatException e){
-			System.out.println("B≥πd "+ wiadomoscPodajLiczbe +" nie jest liczbπ");
+			System.out.println("B≈ÇƒÖd "+ wiadomoscPodajLiczbe +" nie jest liczbƒÖ");
 			return false;
 		}
 	}
