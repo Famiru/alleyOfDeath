@@ -25,7 +25,7 @@ public class Main extends Application {
 
 	Stage okno;
 	Scene scena;
-    private Timeline timeline;
+
     private Button przyciskWrog;
     private int punkty=0;
 	private int czas=0;
@@ -71,15 +71,12 @@ public class Main extends Application {
 					timeliner.stop();
 				}
 				timeSeconds.set(STARTTIME);
-				timeliner = new Timeline();
 				timeliner.getKeyFrames().add(
 						new KeyFrame(Duration.seconds(STARTTIME+1),
 								new KeyValue(timeSeconds, 0)));
 				timeliner.playFromStart();
+				zmienNaLosowaPozycje(przyciskWrog);
 			}
-		});
-		przyciskGry.setOnAction(e -> {
-			zmienNaLosowaPozycje(przyciskWrog);
 		});
 
 		wyswietlCzas.setId("time");
@@ -127,6 +124,7 @@ public class Main extends Application {
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
+		Timeline timeline = new Timeline();
         timeline.setDelay(javafx.util.Duration.seconds(0.7));
         timeline.stop();
         timeline.getKeyFrames().clear();
