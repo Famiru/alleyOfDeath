@@ -2,18 +2,23 @@ package application;
 	
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 import java.util.Random;
 
 public class Main extends Application {
@@ -25,9 +30,11 @@ public class Main extends Application {
     private int punkty=0;
 	private int czas=0;
     Label wyswietlPunkty;
-	Label wyswietlCzas;
 
-
+	private static final Integer STARTTIME = 60;
+	private Timeline timeliner;
+	private Label wyswietlCzas = new Label("Czas: ");
+	private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
 
 	@Override
 	public void start(Stage oknoGlowne) {
@@ -38,18 +45,16 @@ public class Main extends Application {
 		panelGlowny.setPadding(new Insets(10,10,10,10));
 		panelGlowny.setHgap(5);
 		panelGlowny.setVgap(10);
-
 		Pane panelGry = new Pane();
-
 		Image wskaznik = new Image("file:celownik.gif");
 		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
 
-        timeline = new Timeline();
-        timeline.setCycleCount( Timeline.INDEFINITE );
-        timeline.setAutoReverse( true );
+        timeliner = new Timeline();
+        timeliner.setCycleCount( Timeline.INDEFINITE );
+        timeliner.setAutoReverse( true );
 
-        //Functionality And Display poops
-		Button przyciskGry = new Button("Nowa Gra");
+
+
 
 		przyciskWrog = new Button("");
 		przyciskWrog.setId("obrazekWrog");
@@ -57,14 +62,33 @@ public class Main extends Application {
 			zaktualizujPunkt();
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
+
+		Button przyciskGry = new Button("Nowa Gra");
+		przyciskGry.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (timeliner != null) {
+					timeliner.stop();
+				}
+				timeSeconds.set(STARTTIME);
+				timeliner = new Timeline();
+				timeliner.getKeyFrames().add(
+						new KeyFrame(Duration.seconds(STARTTIME+1),
+								new KeyValue(timeSeconds, 0)));
+				timeliner.playFromStart();
+			}
+		});
 		przyciskGry.setOnAction(e -> {
 			zmienNaLosowaPozycje(przyciskWrog);
 		});
 
+		wyswietlCzas.setId("time");
+		wyswietlCzas.textProperty().bind(timeSeconds.asString());
+		wyswietlCzas.setTextFill(Color.RED);
+
 		wyswietlPunkty = new Label("Punkty: " + punkty);
 		wyswietlPunkty.setId("points");
-		wyswietlCzas = new Label("Czas: " + czas);
-		wyswietlCzas.setId("time");
+
 
 		GridPane panelMenu = new GridPane();
 		panelMenu.setPadding(new Insets(10,10,10,10));
@@ -72,7 +96,7 @@ public class Main extends Application {
 		panelMenu.setVgap(10);
 		GridPane.setConstraints(wyswietlPunkty,0,0);
 		GridPane.setConstraints(przyciskGry,30,0);
-		GridPane.setConstraints(wyswietlCzas,60,0);
+		GridPane.setConstraints(wyswietlCzas,35,0);
 		GridPane.setConstraints(panelGry,0,2);
 		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, wyswietlCzas);
 		panelGry.getChildren().addAll(przyciskWrog);
