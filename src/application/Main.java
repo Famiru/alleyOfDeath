@@ -58,7 +58,9 @@ public class Main extends Application {
 
 		przyciskWrog = new Button("");
 		przyciskWrog.setId("obrazekWrog");
+		przyciskWrog.setVisible(false);
 		przyciskWrog.setOnAction((ActionEvent e) -> {
+			//przyciskWrog.setVisible(true);
 			zaktualizujPunkt();
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
@@ -71,12 +73,17 @@ public class Main extends Application {
 					timeliner.stop();
 				}
 				timeSeconds.set(STARTTIME);
+				timeliner = new Timeline();
 				timeliner.getKeyFrames().add(
 						new KeyFrame(Duration.seconds(STARTTIME+1),
 								new KeyValue(timeSeconds, 0)));
 				timeliner.playFromStart();
 				zmienNaLosowaPozycje(przyciskWrog);
+				przyciskWrog.setVisible(true);
+				przyciskGry.setVisible(false);
+
 			}
+
 		});
 
 		wyswietlCzas.setId("time");
@@ -88,12 +95,12 @@ public class Main extends Application {
 
 
 		GridPane panelMenu = new GridPane();
-		panelMenu.setPadding(new Insets(10,10,10,10));
+		panelMenu.setPadding(new Insets(2,10,10,10));
 		panelMenu.setHgap(10);
 		panelMenu.setVgap(10);
 		GridPane.setConstraints(wyswietlPunkty,0,0);
-		GridPane.setConstraints(przyciskGry,30,0);
-		GridPane.setConstraints(wyswietlCzas,35,0);
+		GridPane.setConstraints(przyciskGry,35,0);
+		GridPane.setConstraints(wyswietlCzas,75,0);
 		GridPane.setConstraints(panelGry,0,2);
 		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, wyswietlCzas);
 		panelGry.getChildren().addAll(przyciskWrog);
@@ -162,14 +169,3 @@ public class Main extends Application {
 
 	}
 }
-
-//		Button przyciskWyjscia = new Button("Exit");
-//		Button przyciskWynikKoncowyWygrana = new Button("Wynik Koncowy Wygrana");
-//		Button przyciskWynikKoncowyPrzegrana = new Button("Wynik Koncowy Przegrana");
-//		przyciskWyjscia.setOnAction(e -> System.exit(0));
-//		przyciskWynikKoncowyWygrana.setOnAction(e -> {
-//			Wynik.wyswietlWynik("Gratulacje", "Wygrałeś", "Menu", "Wyjście");
-//		});
-//		przyciskWynikKoncowyPrzegrana.setOnAction(e -> {
-//			Wynik.wyswietlWynik("Niestety", "Przegrałeś", "Menu", "Wyjście");
-//		});
