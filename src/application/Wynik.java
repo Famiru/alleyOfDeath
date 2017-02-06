@@ -14,27 +14,22 @@ import javafx.scene.layout.VBox;
 
 public class Wynik{
 	
-	static boolean przelaczDoMenu;
-	
-	public static boolean wyswietlWynik(String tytul, String opisWyniku, int liczbaPunktow, String przyciskMenu, String przyciskZamkniecia){
+	public static void wyswietlWynik(int liczbaPunktow){
 		
 		Stage okno = new Stage();
 		okno.initModality(Modality.APPLICATION_MODAL);
-		okno.setTitle(tytul);
+		okno.setTitle("Gratulacje");
 		okno.setMinWidth(300);
-		Label wiadomoscWynikowa = new Label(opisWyniku + liczbaPunktow + " punktów");
-		wiadomoscWynikowa.setText(opisWyniku);
+		Label wiadomoscWynikowa = new Label("Osiągnąłeś: " + liczbaPunktow + " punktów");
 
-		Button zamknijOkno = new Button(przyciskZamkniecia);
-		Button idzDoMenu = new Button(przyciskMenu);
+		Button zamknijOkno = new Button("Zamknij");
+		Button idzDoMenu = new Button("Menu");
 		
 		zamknijOkno.setOnAction(e ->{
-			przelaczDoMenu = false;
 			okno.close();
 			System.exit(0);
 		});
 		idzDoMenu.setOnAction(e ->{
-			przelaczDoMenu = true;
 			okno.close();
 		});
 		
@@ -44,7 +39,5 @@ public class Wynik{
 		Scene wyswietlanie = new Scene(wyswietlRezultat);
 		okno.setScene(wyswietlanie);
 		okno.showAndWait();
-		
-		return przelaczDoMenu;
 	}
 }

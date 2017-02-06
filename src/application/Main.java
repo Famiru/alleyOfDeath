@@ -31,7 +31,7 @@ public class Main extends Application {
 	private int czas=0;
     Label wyswietlPunkty;
 
-	private static final Integer STARTTIME = 5;
+	private static final Integer STARTTIME = 60;
 	private Timeline timeliner;
 	private Label wyswietlCzas = new Label("Czas: ");
 	private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
@@ -61,14 +61,13 @@ public class Main extends Application {
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 
+		Button przyciskGry = new Button("Graj");
 		Button przyciskWynikowy = new Button("WYNIK");
 		przyciskWynikowy.setOnAction(e -> {
-		boolean result = Wynik.wyswietlWynik("Gratulacje","Osiąglnąłeś", punkty, "Powrót", "Zamknij");
-		System.out.print(result);
+			Wynik.wyswietlWynik(punkty);
 		});
 		przyciskWynikowy.setVisible(false);
 
-		Button przyciskGry = new Button("Nowa Gra");
 		przyciskGry.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -92,8 +91,8 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				przyciskWrog.setVisible(false);
-				przyciskGry.setVisible(true);
 				przyciskWynikowy.setVisible(true);
+				przyciskGry.setVisible(true);
 			}
 
 		});
@@ -110,10 +109,11 @@ public class Main extends Application {
 		panelMenu.setPadding(new Insets(2,10,10,10));
 		panelMenu.setHgap(10);
 		panelMenu.setVgap(10);
+		przyciskWynikowy.setVisible(false);
 		GridPane.setConstraints(wyswietlPunkty,0,0);
 		GridPane.setConstraints(przyciskGry,35,0);
 		GridPane.setConstraints(wyswietlCzas,75,0);
-		GridPane.setConstraints(przyciskWynikowy,35,5);
+		GridPane.setConstraints(przyciskWynikowy,35,15);
 		GridPane.setConstraints(panelGry,0,2);
 		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, przyciskWynikowy, wyswietlCzas);
 		panelGry.getChildren().addAll(przyciskWrog);
@@ -161,7 +161,7 @@ public class Main extends Application {
     {
         Random rand = new Random();
         int xWartoscLosowa = rand.nextInt(724) + 150;
-        int yWartoscLosowa = rand.nextInt(404) + 102;
+        int yWartoscLosowa = rand.nextInt(354) + 102;
 
         Pozycja pozycja = new Pozycja(xWartoscLosowa,yWartoscLosowa);
         return pozycja;
