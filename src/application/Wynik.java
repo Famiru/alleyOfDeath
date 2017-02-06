@@ -16,15 +16,15 @@ public class Wynik{
 	
 	static boolean przelaczDoMenu;
 	
-	public static boolean wyswietlWynik(String tytul, String opisWyniku, String przyciskMenu, String przyciskZamkniecia){
+	public static boolean wyswietlWynik(String tytul, String opisWyniku, int liczbaPunktow, String przyciskMenu, String przyciskZamkniecia){
 		
 		Stage okno = new Stage();
 		okno.initModality(Modality.APPLICATION_MODAL);
 		okno.setTitle(tytul);
-		okno.setMinWidth(200);
-		Label wiadomoscWynikowa = new Label();
+		okno.setMinWidth(300);
+		Label wiadomoscWynikowa = new Label(opisWyniku + liczbaPunktow + " punktów");
 		wiadomoscWynikowa.setText(opisWyniku);
-		
+
 		Button zamknijOkno = new Button(przyciskZamkniecia);
 		Button idzDoMenu = new Button(przyciskMenu);
 		

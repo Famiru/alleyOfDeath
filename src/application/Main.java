@@ -27,11 +27,11 @@ public class Main extends Application {
 	Scene scena;
 
     private Button przyciskWrog;
-    private int punkty=0;
+    public int punkty=0;
 	private int czas=0;
     Label wyswietlPunkty;
 
-	private static final Integer STARTTIME = 60;
+	private static final Integer STARTTIME = 5;
 	private Timeline timeliner;
 	private Label wyswietlCzas = new Label("Czas: ");
 	private IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
@@ -50,11 +50,7 @@ public class Main extends Application {
 		panelGlowny.setCursor(new ImageCursor(wskaznik, wskaznik.getWidth() / 2, wskaznik.getHeight() / 2));
 
         timeliner = new Timeline();
-        timeliner.setCycleCount( Timeline.INDEFINITE );
-        timeliner.setAutoReverse( true );
-
-
-
+        timeliner.setAutoReverse( false );
 
 		przyciskWrog = new Button("");
 		przyciskWrog.setId("obrazekWrog");
@@ -65,6 +61,13 @@ public class Main extends Application {
 			nacisnieciePrzyciskuWrog(przyciskWrog);
 		});
 
+		Button przyciskWynikowy = new Button("WYNIK");
+		przyciskWynikowy.setOnAction(e -> {
+		boolean result = Wynik.wyswietlWynik("Gratulacje","Osiąglnąłeś", punkty, "Powrót", "Zamknij");
+		System.out.print(result);
+		});
+		przyciskWynikowy.setVisible(false);
+
 		Button przyciskGry = new Button("Nowa Gra");
 		przyciskGry.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -73,7 +76,7 @@ public class Main extends Application {
 					timeliner.stop();
 				}
 				timeSeconds.set(STARTTIME);
-				timeliner = new Timeline();
+
 				timeliner.getKeyFrames().add(
 						new KeyFrame(Duration.seconds(STARTTIME+1),
 								new KeyValue(timeSeconds, 0)));
@@ -81,7 +84,16 @@ public class Main extends Application {
 				zmienNaLosowaPozycje(przyciskWrog);
 				przyciskWrog.setVisible(true);
 				przyciskGry.setVisible(false);
+				przyciskWynikowy.setVisible(false);
+			}
+		});
 
+		timeliner.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				przyciskWrog.setVisible(false);
+				przyciskGry.setVisible(true);
+				przyciskWynikowy.setVisible(true);
 			}
 
 		});
@@ -101,8 +113,9 @@ public class Main extends Application {
 		GridPane.setConstraints(wyswietlPunkty,0,0);
 		GridPane.setConstraints(przyciskGry,35,0);
 		GridPane.setConstraints(wyswietlCzas,75,0);
+		GridPane.setConstraints(przyciskWynikowy,35,5);
 		GridPane.setConstraints(panelGry,0,2);
-		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, wyswietlCzas);
+		panelMenu.getChildren().addAll(wyswietlPunkty, przyciskGry, przyciskWynikowy, wyswietlCzas);
 		panelGry.getChildren().addAll(przyciskWrog);
 		panelGlowny.getChildren().addAll(panelMenu,panelGry);
 
@@ -128,6 +141,9 @@ public class Main extends Application {
 	}
 
 	private void zmienNaLosowaPozycje(Button przyciskWrog) {
+
+		if (STARTTIME==61){
+		} else {
 	    Pozycja nastepnaPozycja = pobierzLosowaPozycje();
         KeyValue kx = new KeyValue( przyciskWrog.layoutXProperty(), nastepnaPozycja.x );
         KeyValue ky = new KeyValue( przyciskWrog.layoutYProperty(), nastepnaPozycja.y );
@@ -138,13 +154,14 @@ public class Main extends Application {
         timeline.getKeyFrames().add( new KeyFrame(javafx.util.Duration.seconds(0.01),
                 ( e ) -> zmienNaLosowaPozycje(przyciskWrog), kx, ky) );
         timeline.play();
+		}
     }
 
 	private Pozycja pobierzLosowaPozycje()
     {
         Random rand = new Random();
         int xWartoscLosowa = rand.nextInt(724) + 150;
-        int yWartoscLosowa = rand.nextInt(454) + 102;
+        int yWartoscLosowa = rand.nextInt(404) + 102;
 
         Pozycja pozycja = new Pozycja(xWartoscLosowa,yWartoscLosowa);
         return pozycja;
